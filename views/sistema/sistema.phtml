@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="row">
+        
+        <div class="col-md-1">
+            <a class="btn btn-primary" id="btnAgregar"  data-toggle="modal" href="#myModal" onClick="Sistema.prototype.abreModal('<?php echo BASE_URL ?>sistema/abreOrganizacion', 'Nueva Organización')" >
+            <div class="panel-body">
+                Agregar una nueva organizaci&oacute;n <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </div>
+            </a>
+ 
+        </div>
+    
+    </div>
+    
+    <div class="row">
+        <?php
+        if ($this->_organizacion) {
+         ?>
+        <h3 class="page-header">Organizaciones</h3>
+        <?php
+            foreach ($this->_organizacion as $org) {
+                ?>
+                 <h4 class="page-header">                    
+                            <?php echo $org->getDescripcion(); ?>                 
+                 </h4>
+                <?php
+            }
+        }
+        ?>
+    </div>
+   
+</div>
