@@ -1,0 +1,30 @@
+function Modulo(){
+    
+    
+
+}
+Modulo.prototype.abreModal = function(urlCarga, titulo, id){
+        $.ajax({
+             type:"POST", 
+             url:urlCarga,  
+             cache: false,
+             contentType: false,
+             processData: false,
+             beforeSend: function () {
+             },
+             success:function(data)
+             { 
+                
+                 $( "#ML_tituloForm" ).html( titulo +' '+id );
+                 $( "#ML_divPopup" ).html( data );               
+                          
+                            
+             }   
+                               
+                             
+             
+         });
+         return false;  
+     }
+
+

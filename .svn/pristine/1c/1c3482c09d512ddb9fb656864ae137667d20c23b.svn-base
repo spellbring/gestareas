@@ -1,0 +1,76 @@
+
+                <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+                    <div class="page-header pull-left">
+                        <div class="page-title">
+                            M&oacute;dulos</div>
+                    </div>
+                    <ol class="breadcrumb page-breadcrumb pull-right">
+                        <li><i class="fa fa-home"></i>&nbsp;<a href="sistema">Home</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+                        <li class="hidden"><a href="#">Dashboard</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+                        <li class="active">Dashboard</li>
+                    </ol>
+                    <div class="clearfix">
+                    </div>
+                </div>
+                 <?php if($this->_moduloProyecto)
+                 {
+                 foreach($this->_moduloProyecto as $modProy) 
+                 {
+                 ?>
+                <div class="col-lg-4">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            M&oacute;dulo: <?php echo $modProy->getNombre()?></div>
+                        <div class="panel-body pan">
+                            <form action="#">
+                            <div class="form-body pal">
+                                <button type="submit" class="btn btn-primary">
+                                    <b>Agregar Tarea <span class="glyphicon glyphicon-plus" aria-hidden="false"></span></b></button>
+                            </div>
+                             <?php if($this->_tarea->getTarea($modProy->getIdHito()))
+                                 {
+                                 foreach($this->_tarea->getTarea($modProy->getIdHito()) as $tareaProd)
+                             
+                                 {?>   
+                                    <div class="form-body pal">
+                                        <div class="panel panel-green">
+                                            <div class="panel-body pal">
+                                            <b><?php echo $tareaProd->getNombre() ?></b>
+                                                <?php if($tareaProd->getId_nivel() == 1){ ?>
+                                                <span class="label label-danger"><?php echo $tareaProd->getDescripcion() ?></span>
+                                                <?php } ?>
+                                                 <?php if($tareaProd->getId_nivel() == 2){ ?>
+                                                <span class="label label-yellow"><?php echo $tareaProd->getDescripcion() ?></span>
+                                                <?php } ?>
+                                                 <?php if($tareaProd->getId_nivel() == 3){ ?>
+                                                <span class="label label-danger"><?php echo $tareaProd->getDescripcion() ?></span>
+                                                <?php } ?>
+                                            </div>
+                                        </div>
+<!--                                        <button type="submit" class="btn btn-success">
+                                            </button>-->
+                                    </div>
+                             <?php }
+                             }?>
+                            <div class="form-body pal">
+                                <div class="row">
+
+                                </div> 
+                            </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+                 <?php 
+                 }
+                 }
+                 ?>
+
+                <!--END TITLE & BREADCRUMB PAGE-->
+                <!--BEGIN CONTENT-->
+                
+                    
+              
+   

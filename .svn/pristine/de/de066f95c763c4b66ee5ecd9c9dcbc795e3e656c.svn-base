@@ -1,0 +1,59 @@
+<div class="container">
+
+    <div class="row">
+        <div class='col-md-12'>
+
+            <div class ="row">
+                <div class='col-md-8'>
+                    <div class="form-group">
+                        <label for ="it_slProyecto">Seleccione Proyecto</label>
+                        <select class="form-control" name="it_slProyecto" id="it_slProyecto"></select>
+
+
+                    </div>
+                     </div>
+
+                </div>
+
+                <div class ="row">
+                    <div class='col-md-8'>
+                        <div class="form-group">
+                            <label for ="it_slModulo">Módulo</label>
+                            <select class="form-control" name="it_slModulo" id="it_slModulo"></select>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class='col-md-8'>
+                        <div class="form-group">
+                            <label for ="it_txtNombreTicket">Tarea Solicitada</label>
+                            <input type="text" class="form-control" name="it_txtNombreTicket" id="it_txtNombreTicket"/>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class='col-md-3'>
+                        <div class="form-group">
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+
+    </div>
