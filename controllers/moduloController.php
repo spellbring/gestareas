@@ -32,7 +32,7 @@ class moduloController extends Controller {
     
      public function abreInfoTicket($id) {
         Session::set("SESS_MODULO", $id);
-        $tarea = $this->_tarea->getTarea(Session::get("SESS_MODULO"));
+        $tarea = $this->_tarea->getTarea($id);
         $this->_view->_mostrarTarea = $tarea;
         $this->_view->renderizaCenterBox('informacionTicket');
     }
@@ -61,7 +61,46 @@ class moduloController extends Controller {
                 '" . $solucionPropuesta . "',1," . $prioridad . "," . $modulo . "," . $tipologia .");";
         $consulta = $this->_tarea->exeSQL($sql);
         if ($consulta) {
-            echo $sql;
+           $html = file_get_contents(ROOT . 'views' . DS . 'sistema' . DS . 'correos' . DS . 'tarea.html');
+                $reempl = array('Titulo' => 'Asunto Prueba',    
+                    'descripcion proceso' => 'Un comentario para describir el proceso',
+                    'Descripcion'=>'se ha asignado una tarea a Jaime Reyes Romero'
+                    );
+
+                foreach ($reempl as $nombre => $valor) {
+                    $html = str_replace('{' . $nombre . '}', $valor, $html);
+                }
+
+                if (!empty($descripcionProblema)) {
+                    //--------------------------Configuracion Correo---------------------  
+                    $this->getLibrary('PHPMailerAutoload');
+                    $mail = new PHPMailer();
+                    $mail->IsSMTP();
+                    $mail->SMTPAuth = true;
+
+                    $mail->Port = 587;
+                    $mail->Host = "smtp.gmail.com";
+                    $mail->Username = "jjreyes.romero88@gmail.com";
+                    $mail->Password = "123DnD123!";
+
+                    $mail->From = 'jjreyes.romero88@gmail.com';
+                    $mail->FromName = 'Solicitud de trabajo';
+                    $mail->CharSet = CHARSET;
+                    $mail->Subject = 'Asignación de trabajo: ';
+                    $mail->Body = $descripcionProblema;
+
+                    $mail->MsgHTML($html);
+
+                    $mail->AddAddress('jjreyes.romero88@gmail.com', "Jaime Reyes");
+                    if ($mail->Send()){ 
+                    echo 'OK';}
+                     else {
+                     echo 'Error al enviar el Correo';}
+                        
+                } else {
+                    echo 'Escriba un mensaje';
+                } 
+            
         }
         else{
             echo 'No se pudo insertar la tarea';

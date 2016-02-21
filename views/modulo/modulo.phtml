@@ -16,7 +16,7 @@
 if ($this->_moduloProyecto) {
     foreach ($this->_moduloProyecto as $modProy) {
         ?>
-        <div class="col-lg-4">
+        <div class="col-lg-4" id="panelModulo">
             <div class="panel panel-green">
                 <div class="panel-heading">
                     M&oacute;dulo: <?php echo $modProy->getNombre() ?></div>
@@ -34,11 +34,11 @@ if ($this->_moduloProyecto) {
                                 <div class="form-body pal">
 
                                     <div class="panel panel-green">
-                                        <a data-toggle="modal" href="#myModal" onClick="Modulo.prototype.abreModal('<?php echo BASE_URL ?>modulo/abreInfoTicket/<?php echo $modProy->getIdHito() ?>', 'Información de la Tarea')">
+                                        <a data-toggle="modal" href="#myModal" onClick="Modulo.prototype.abreModal('<?php echo BASE_URL ?>modulo/abreInfoTicket/<?php echo $tareaProd->getIdTarea() ?>', 'Informaci&oacute;n de la Tarea','<?php echo $tareaProd->getIdTarea() ?>')">
                                             <div class="panel-body pal">
 
                                                 <b><?php echo $tareaProd->getNombre() ?></b>
-                <?php if ($tareaProd->getId_nivel() == 1) { ?>
+                                               <?php if ($tareaProd->getId_nivel() == 1) { ?>
                                                     <span class="label label-danger"><?php echo $tareaProd->getDescripcion() ?></span>
                                                 <?php } ?>
                                                 <?php if ($tareaProd->getId_nivel() == 2) { ?>

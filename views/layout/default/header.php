@@ -90,7 +90,7 @@
                     </ul>
                 </div>
                 <ul class="nav navbar navbar-top-links navbar-right mbn">
-                    <li class="dropdown"><a data-hover="dropdown" href="#" class="dropdown-toggle"><i class="fa fa-bell fa-fw"></i><span class="badge badge-green">3</span></a>
+<!--                    <li class="dropdown"><a data-hover="dropdown" href="#" class="dropdown-toggle"><i class="fa fa-bell fa-fw"></i><span class="badge badge-green">3</span></a>
                         
                     </li>
                     <li class="dropdown"><a data-hover="dropdown" href="#" class="dropdown-toggle"><i class="fa fa-envelope fa-fw"></i><span class="badge badge-orange">7</span></a>
@@ -98,19 +98,19 @@
                     </li>
                     <li class="dropdown"><a data-hover="dropdown" href="#" class="dropdown-toggle"><i class="fa fa-tasks fa-fw"></i><span class="badge badge-yellow">8</span></a>
                         
-                    </li>
+                    </li>-->
                     <li class="dropdown topbar-user"><a data-hover="dropdown" href="#" class="dropdown-toggle"><img src="images/avatar/48.jpg" alt="" class="img-responsive img-circle"/>&nbsp;<span class="hidden-xs"><?php echo Session::get("SESS_USER"); ?></span>&nbsp;<span class="caret"></span></a>
                         <ul class="dropdown-menu dropdown-user pull-right">
-                            <li><a href="datoslogin"><i class="fa fa-user"></i>My Profile</a></li>
-                            <li><a href="#"><i class="fa fa-calendar"></i>My Calendar</a></li>
+                            <li><a href="datoslogin"><i class="fa fa-user"></i>Mi Perfil</a></li>
+<!--                            <li><a href="#"><i class="fa fa-calendar"></i>My Calendar</a></li>
                             <li><a href="#"><i class="fa fa-envelope"></i>My Inbox<span class="badge badge-danger">3</span></a></li>
                             <li><a href="#"><i class="fa fa-tasks"></i>My Tasks<span class="badge badge-success">7</span></a></li>
                             <li class="divider"></li>
-                            <li><a href="#"><i class="fa fa-lock"></i>Lock Screen</a></li>
+                            <li><a href="#"><i class="fa fa-lock"></i>Lock Screen</a></li>-->
                             <li><a href="login"><i class="fa fa-key"></i>Log Out</a></li>
                         </ul>
                     </li>
-                    <li id="topbar-chat" class="hidden-xs"><a href="javascript:void(0)" data-step="4" data-intro="&lt;b&gt;Form chat&lt;/b&gt; keep you connecting with other coworker" data-position="left" class="btn-chat"><i class="fa fa-comments"></i><span class="badge badge-info">3</span></a></li>
+<!--                    <li id="topbar-chat" class="hidden-xs"><a href="javascript:void(0)" data-step="4" data-intro="&lt;b&gt;Form chat&lt;/b&gt; keep you connecting with other coworker" data-position="left" class="btn-chat"><i class="fa fa-comments"></i><span class="badge badge-info">3</span></a></li>-->
                 </ul>
             </div>
         </nav>
@@ -152,7 +152,7 @@
          <div id="wrapper">
                 <!--BEGIN SIDEBAR MENU-->
             <nav id="sidebar" role="navigation" data-step="2" data-intro="Template has &lt;b&gt;many navigation styles&lt;/b&gt;"
-                data-position="right" class="navbar-default navbar-static-side">
+                data-position="right" class="navbar-default navbar-static-side" style="z-index: 100">
             <div class="sidebar-collapse menu-scroll">
                 <ul id="side-menu" class="nav">
                     

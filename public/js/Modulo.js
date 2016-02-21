@@ -31,7 +31,7 @@ Modulo.prototype.abreModal = function(urlCarga, titulo, id){
  Modulo.prototype.procesoEnviaForm = function(classFrm,url,btn,urlCarga){
 $("#" + btn).attr('disabled', 'disabled');
  $("#" + btn).attr('disabled', 'disabled');
-       //initLoad();
+       initLoad();
       var formData = new FormData($("." + classFrm)[0]);
      
         $.ajax({
@@ -45,7 +45,7 @@ $("#" + btn).attr('disabled', 'disabled');
              },
              success:function(data)
              { 
-                
+               
                   var reply = data.replace(/\s+/, "");// se tiene que implementar de esta forma ya que el actual
                   //jQuery tiene errores en tomar los datos desde el servidor.
                      if(reply !== "OK"){
@@ -53,8 +53,11 @@ $("#" + btn).attr('disabled', 'disabled');
                     noExito(data);
                     $("#" + btn).delay(2000).queue(function (m)
                             {
-                                $("#" + btn).removeAttr("disabled");
+                              
+                                $("#" + btn).removeAttr("disabled");  
                                 m();
+                                endLoad();
+                                
                             });
                  }  
                  else{
@@ -66,11 +69,14 @@ $("#" + btn).attr('disabled', 'disabled');
                             });
                             
                             if(urlCarga !== ''){
+                                 endLoad();
                                 $("#ML_divPopup").html('<div class="alert alert-dismissable alert-success"><strong>Terminado</strong><br/> Proceso realizado con &eacute;xito.</div>');
                                 setTimeout("location.href = '"+urlCarga+"'", 2000);
                             }
                             else{
-                               exito('Se ha creado el usuario en forma correcta'); 
+                                endLoad();
+                               exito('Se ha creado el usuario en forma correcta');
+                              
                             }
                  }   
                                

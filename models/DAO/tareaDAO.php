@@ -26,7 +26,7 @@ class tareaDAO extends Model{
                 . "FROM tarea A "
                 . "inner join nivel b "
                 . "on a.Nivel_idNivel = b.idNivel "
-                . "where Hito_idHito = ".$id."";
+                . "where A.idTarea = ".$id."";
                
         $datos = $this->_db->consulta($sql);
         if ($this->_db->numRows($datos) > 0) {
