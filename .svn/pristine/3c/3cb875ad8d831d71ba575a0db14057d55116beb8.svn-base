@@ -1,0 +1,25 @@
+<?php
+class proyectoController extends Controller{
+    
+   public function __construct() {
+        parent::__construct();
+        //$this->_modelo = $this->loadModel('proyecto');
+ 
+    }
+    
+    public function index(){
+      
+      //$this->_view->_titulo = "Administración de Proyectos";
+      
+      //Traemos todos los proyectos
+      //$proyectos = $this->_modelo->getProyectos();
+      
+      //Enviamos a la vista
+      //$this->_view->_proyectos = $proyectos;
+             
+       $this->_view->renderizarSistema('usuario');
+    }
+    
+
+}
+
