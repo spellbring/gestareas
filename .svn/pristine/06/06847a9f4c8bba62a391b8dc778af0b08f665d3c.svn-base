@@ -1,0 +1,76 @@
+<?php
+
+class clienteController extends Controller{
+    
+    public function __construct() {
+        parent::__construct();
+        $this->_modelo = $this->loadModel('cliente');
+    }
+    
+    public function index() {
+        
+        $this->_view->_titulo = "Administraci&oacute;n de Clientes";
+        $this->_view->_tituloPanel = "Clientes";
+        $clientes = $this->_modelo->getCliente(0);
+        $this->_view->_clientes = $clientes;
+        $this->_view->renderizarSistema('cliente');
+    }
+    
+    function nuevo() {
+
+        //$clientes = $this->_modelo->getCliente(0);
+        //$this->_view->_clientes = $clientes;
+        $this->_view->renderizaCenterBox('nuevoCliente');
+    }
+
+    function ingresar() {
+
+        $nombre = $this->getTexto("txtNombre");
+        $nombreCorto = $this->getTexto("txtNombreCorto");
+
+        if ($this->_modelo->insertarCliente($nombre, $nombreCorto)) {
+            echo 'OK';
+        }
+    }
+//
+//    function eliminar() {
+//
+//        $id = $this->getTexto("txtId");
+//        if ($this->_modelo->eliminarProyecto($id)) {
+//            echo 'OK';
+//        }
+//    }
+//
+//    function modificar() {
+//
+//        $id = $this->getTexto("txtId");
+//        $nombre = $this->getTexto("txtNombre");
+//        $nemo = $this->getTexto("txtNemo");
+//
+//        if (isset($id) && isset($nombre) && isset($nemo)) {
+//            if ($this->_modelo->modificarProyecto($id, $nombre, $nemo)) {
+//                echo 'OK';
+//            }
+//        } else {
+//            echo 'Debe completar los campos requeridos';
+//        }
+//    }
+//
+    function detalleClientes($id) {
+
+        $clientes = $this->_modelo->getCliente($id);
+
+        if ($clientes) {
+            $this->_view->_id = $clientes[0]->getId();
+            $this->_view->_nombre = $clientes[0]->getNombre();
+            $this->_view->_nombreCorto = $clientes[0]->getNombreCorto();
+
+        }  else {
+            echo 'error';
+        }
+    
+        $this->_view->renderizaCenterBox('detalleClientes');
+    }
+
+}
+

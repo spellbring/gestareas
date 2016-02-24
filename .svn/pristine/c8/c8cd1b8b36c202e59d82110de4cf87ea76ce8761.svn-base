@@ -1,0 +1,39 @@
+<form class="formModulo">  
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>ID</label>
+                <input type="text" readonly="true" class="form-control" name="txtId" value="<?php echo $this->_id ?>">
+            </div>  
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>Nombre</label>
+                <input type="text" class="form-control" name="txtNombre" value="<?php echo $this->_nombre ?>">
+            </div>  
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>Nombre Corto</label>
+                <input type="text" class="form-control"  name="txtNombreCorto" value="<?php echo $this->_nombreCorto ?>">
+            </div>  
+        </div>
+        <br>
+    </div>
+
+</form>
+<script>
+    function abreDetalle() {
+
+        $("#detalleTareas").show();
+
+    }
+    function ocultar() {
+
+        $("#detalleTareas").hide();
+
+    }
+</script>
+
+
+

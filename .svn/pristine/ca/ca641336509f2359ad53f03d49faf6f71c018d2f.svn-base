@@ -1,0 +1,26 @@
+<div class="row">
+    <form class="form" method="post">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="control-label">Nombre</label>
+                <input name="txtNombre"  type="text" class="form-control">
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="control-label">Nombre Corto</label>
+                <input type="text" name="txtNombreCorto" class="form-control">
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group text-right">
+                    <button type="submit" id="btn" class="btn btn-yellow" onclick="Cliente.prototype.procesoEnviaForm('form', '<?php echo BASE_URL ?>proyecto/ingresar', 'btn', '<?php echo BASE_URL ?>proyecto')">Guardar</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+

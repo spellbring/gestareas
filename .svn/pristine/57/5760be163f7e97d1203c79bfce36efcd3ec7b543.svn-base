@@ -1,0 +1,61 @@
+<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+    <div class="page-header pull-left">
+        <div class="page-title">
+            <i class="fa fa-list fa-2x" style="font-size: 30px"></i>&nbsp <?php echo $this->_titulo ?></div>
+    </div>
+    <ol class="breadcrumb page-breadcrumb pull-right">
+        <li><i class="fa fa-home"></i>&nbsp;<a href="sistema">Inicio</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+        <li class="hidden"><a href="#"><?php echo $this->_titulo ?></a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+        <li class="active"><?php echo $this->_titulo ?></li>
+    </ol>
+    <div class="clearfix">
+    </div>
+</div>
+
+<div class="page-content">
+
+    <a data-toggle="modal" href="#myModal" class="btn btn-primary" onclick="Proyecto.prototype.abreModal('<?php echo BASE_URL ?>/proyecto/nuevo', 'Nuevo Proyecto', '')"><span class="fa fa-plus"></span>&nbsp Nuevo</a>
+
+    <br>
+    <br>
+    <div class="panel panel-grey">
+        <div class="panel-heading"><?php echo $this->_tituloPanel ?></div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th><strong></strong></th>
+                            <th><strong>ID</strong></th>
+                            <th><strong>Nombre</strong></th>
+                            <th><strong>Nemo</strong></th>
+                            <th><strong>Cliente</strong></th>
+                        </tr>
+                    </thead>
+                    <?php
+                    if ($this->_proyectos) {
+                        foreach ($this->_proyectos as $p) {
+                            ?>
+                            <tbody>
+                                <tr>
+                                    <td><a onclick="Proyecto.prototype.abreModal('<?php echo BASE_URL ?>proyecto/detalleProyectos/<?php echo $p->getId_producto() ?>','Detalles del Proyecto', '')" data-toggle="modal" href="#myModal" class="btn btn-success"><span class="fa fa-search-plus"></span></a></td>
+                                    <td><?php echo $p->getId_producto() ?></td>
+                                    <td><?php echo $p->getNombre() ?></td>
+                                    <td><?php echo $p->getNemo() ?></td>
+                                    <td><?php echo $p->getCliente() ?></td>
+                                </tr>
+                            </tbody>
+
+                            <?php
+                        }
+                    }
+                    ?>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

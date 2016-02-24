@@ -1,0 +1,66 @@
+
+<div class="row">
+    <div class="col-md-6">
+        <button onclick="verDetalle();" class="btn btn-primary">Ver Detalle</button>
+       
+        <div id="detalle" style="display: none;">
+             <br>
+        <button onclick="cerrarDetalle();" class="btn btn-primary">Ocultar Detalle</button>
+        <div class="table-responsive">
+            
+       
+            <table class="table">
+                
+                <tbody>
+                    <tr><td><b>Tarea Solicitada</b></td><td><?php echo $this->_It_tarea ?></td></tr>
+                    <tr><td><b>Formulario</b></td><td><?php echo $this->_It_formulario ?></td></tr>
+                    <tr><td><b>Descripci&oacute;n del Problema</b></td><td><?php echo $this->_It_descripcion_problema ?></td></tr>
+                    <tr><td><b>Soluci&oacute; Propuesta</b></td><td><?php echo $this->_It_solucion_propuesta ?></td></tr>
+                    <tr><td><b>Flujo Correcto</b></td><td><?php echo $this->_It_flujo_correcto ?></td></tr>
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+        
+    </div>
+    <form class="form-it">
+      <div class="col-md-6">
+          <div class="form-group">
+              <label>Asignar Tarea Cliente Interno</label>
+              <select class="form-control">
+                  <?php if($this->_usuarioInterno)
+                  {
+                      foreach($this->_usuarioInterno as $us)
+                      {
+                  ?>
+                  <option value='<?php echo $us->getIduser() ?>'><?php echo $us->getNombre().' '.$us->getApellido(); ?></option>
+                  <?php 
+                      }
+                  }
+                  ?>
+              </select>
+          </div>
+          <div class='row'>
+             <div class='col-md-12'>
+                 <a class='btn btn-yellow' id='btnModifica' onclick="Modulo.prototype.procesoEnviaForm('form-it','<?php echo BASE_URL ?>modulo/asignarUsuarioTarea','btnModifica','<?php echo BASE_URL ?>modulo')">Asignar Usuario <span class='fa fa-plus-circle'></span></a>
+            </div> 
+          </div>
+      </div>
+      
+    </form>
+    
+</div>   
+<script>
+    function verDetalle(){
+        $("#detalle").show();
+        
+    }
+    function cerrarDetalle(){
+        $("#detalle").hide();
+        
+    }
+</script>
+
+
+

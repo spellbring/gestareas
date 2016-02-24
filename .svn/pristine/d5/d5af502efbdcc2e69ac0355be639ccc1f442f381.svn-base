@@ -1,0 +1,44 @@
+<?php
+class proyectoController extends Controller{
+    
+   public function __construct() {
+        parent::__construct();
+        $this->_modelo = $this->loadModel('proyecto');
+ 
+    }
+    
+    public function index(){
+        
+      $this->_view->_titulo = "Administraci&oacute;n de Proyectos";
+      $this->_view->_tituloPanel = "Proyectos";
+      $proyectos = $this->_modelo->getProyectos();
+      $this->_view->_proyectos = $proyectos;    
+      $this->_view->renderizarSistema('proyecto');
+    }
+    
+    function nuevo() {
+        
+        
+        $this->_view->renderizaCenterBox('nuevoProyecto');
+    }
+    
+    function ingresar() {
+        //params
+        //$nombre = $this->getTexto("txtNombre");
+        //logica
+        //$resultado = $this->_modelo->dao;
+        
+        //consulta
+        
+        echo 'OK';
+        
+        //notificacion exito
+        
+        
+    }
+    
+    
+    
+
+}
+

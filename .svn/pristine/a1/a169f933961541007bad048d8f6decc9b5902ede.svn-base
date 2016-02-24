@@ -1,0 +1,46 @@
+<?php
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ * Description of clienteDAO
+ *
+ * @author Beto
+ */
+class clienteDAO extends Model {
+
+    function __construct() {
+        parent:: __construct();
+    }
+
+    function getCliente($id = 0) {
+
+        $query = "select c.idCliente, c.nombre, c.nombreCorto from Cliente c";
+
+        if ($id > 0) {
+            $query .= " where c.idCliente = " + $id;
+        }
+
+        try {
+            $datos = $this->_db->consulta($query);
+            if ($this->_db->numRows($datos) > 0) {
+
+                $clienteArray = $this->_db->fetchAll($datos);
+                $cArray = array();
+
+                foreach ($clienteArray as $filas) {
+                    $clienteDTO = new clienteDTO();
+                }
+
+                return null;
+            }
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+    }
+
+}
