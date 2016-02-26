@@ -1,0 +1,59 @@
+<?php
+
+class loginController extends Controller {
+
+    public function __construct() {
+        parent::__construct();
+        $this->_login = $this->loadModel('usuario');
+       
+    }
+
+    public function index() {
+        $this->_view->titulo = 'Login';
+        $this->_view->renderizaLogin('login');
+        Session::destroy();
+    }
+
+    public function ingresar() {
+        try {
+             echo "OK";
+            $user = $this->getTexto('txtLogin');
+            $pass = $this->getTexto('txtContraseña');
+           
+            if (!empty($user) && !empty($pass)) {
+             $objUser = $this->_login->getUsuario($user);
+             if($objUser){
+                if (strtolower($objUser[0]->getUsername()) == $user && $objUser[0]->getPassword() == crypt($pass, 'SMSYS')) {
+
+                    Session::set('SESS_USER', $objUser[0]->getUsername());
+                    Session::set('SESS_ID_USER', $objUser[0]->getIduser());
+                    Session::set('SESS_ID_TIPO_USER', $objUser[0]->getPerfil_idperfil());
+                    if (Session::get('SESS_ERRLOGIN') != null) {
+                        Session::destroy('SESS_ERRLOGIN');
+                    }
+                    header('Location: ' . BASE_URL . 'sistema');
+                } else {
+                      //Session::set('SESS_ERRLOGIN',$user.' '.$pass);
+                    Session::set('SESS_ERRLOGIN', 'Usuario o contraseña incorrectos');
+                    header('Location: ' . BASE_URL . 'login');
+                }
+            } else {
+                    //Session::set('SESS_ERRLOGIN',$user.' '.$pass);
+                Session::set('SESS_ERRLOGIN', 'No existe ese usuario registrado');
+                header('Location: ' . BASE_URL . 'login');
+            }
+            }
+            else{
+                 Session::set('SESS_ERRLOGIN', 'Los campos no deben ir vacíos');
+                  header('Location: ' . BASE_URL . 'login');
+                
+               
+            }
+      
+      
+        } catch (Exception $ex) {
+            echo $ex->getMessage();
+        }
+    }
+
+}

@@ -1,0 +1,251 @@
+
+<div class="row">
+
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Tipo de Estado</label>
+                    <select class="form-control" id="it_cmb_estado">
+                       
+                        <?php
+                        if ($this->_listEstado) {
+                            foreach ($this->_listEstado as $e) {
+                                ?>
+                                <option value="<?php echo $e->getIdEstado() ?>" <?php if ($this->_It_id_estado == $e->getIdEstado()) { ?> selected <?php } ?>><?php echo $e->getNombre() ?></option>
+                                <?php
+                            }
+                        }
+                        ?>
+                    </select>
+                </div>
+
+            </div>
+            <div class="col-md-12">
+                
+                <button onclick="verDetalle();" class="btn btn-primary">Ver Detalle</button>
+                <button onclick="verAsignar();" class="btn btn-yellow">Asignar Tarea a Usuario</button>
+                <h3>Tarea: <?php echo $this->_It_tarea ?></h3>
+                <div id="detalle" style="display: none;">
+                    <br>
+                    <button onclick="cerrarDetalle();" class="btn btn-primary">Ocultar Detalle</button>
+                   
+                    <div class="form-group">
+                         <br>
+                        <textarea class="form-control" readonly="true"><?php echo $this->_It_descripcion_problema ?></textarea>
+                    </div>
+                    
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+    </div>   
+    
+    <div class="col-md-6" id="rechazo" style="display: none" >
+        <br>
+        <button onclick="cerrarRechazo();" class="btn btn-primary">Ocultar</button>
+        <form class="formMotivoRechazo">
+            <div class="row">
+                <div class="col-md-12">
+                    <br>
+                    <input type="hidden" name="it_id_tarea_rechazo" value="<?php echo $this->_It_id_tarea ?>">
+                    <label>Motivo de rechazo</label>
+                    <textarea style="height: 300px" class="form-control" name="it_descripcion_tarea_rechazo" placeholder="Escriba un motivo de rechazo"></textarea>
+                </div>
+                <div class="col-md-12">
+                    <br>
+                    <a class='btn btn-danger' id='btnRechazo' onclick="Modulo.prototype.procesoEnviaForm('formMotivoRechazo', '<?php echo BASE_URL ?>modulo/rechazarTarea', 'btnRechazo', '<?php echo BASE_URL ?>modulo')">Rechazar Solicitud</a>  
+                </div>
+            </div>
+        </form>
+    </div> 
+    
+    <div class="col-md-6"  id="iniciada" style="display: none;">
+        <button onclick="cerrarIniciada();" class="btn btn-primary">Ocultar</button>
+        <form class="formIniciar">
+            <div class="row">
+
+                <div class="col-md-12"  >
+
+                    <div class="form-group">
+                        <label>Fecha de Inicio</label>
+                        <input type="text" class="form-control" name="fechaIncioInicio" id="fechaIncioInicio"/>
+                    </div>    
+
+                </div>
+                <div class="col-md-12" >
+
+                    <div class="form-group">
+                        <label>Fecha de T&eacute;rmino</label>
+                        <input type="text" class="form-control" name="fechaTerminoInicio" id="fechaTerminoInicio"/>
+                    </div>    
+
+                </div>
+                <div class="col-md-12">
+                    <input type="hidden" name="it_id_tarea_iniciar" value="<?php echo $this->_It_id_tarea ?>">
+                    <a class='btn btn-yellow' id='btnIniciar' onclick="Modulo.prototype.procesoEnviaForm('formIniciar', '<?php echo BASE_URL ?>modulo/iniciarTarea', 'btnIniciar', '<?php echo BASE_URL ?>modulo')">Iniciar</a>
+                </div>
+            </div>
+
+        </form> 
+    </div>
+
+    <div class="col-md-6" id="asignada" style="display: none;" >
+         <button onclick="cerrarAsignada();" class="btn btn-primary">Ocultar</button>
+        <form class="form-it">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Asignar Tarea Cliente Interno</label>
+                        <select class="form-control" name="usuarioAsignacion">
+                            <option value="">Seleccione un Cliente Interno</option>
+                            <?php
+                            if ($this->_usuarioInterno) {
+                                foreach ($this->_usuarioInterno as $us) {
+                                    ?>
+                                    <option value='<?php echo $us->getIduser() ?>'><?php echo $us->getNombre() . ' ' . $us->getApellido(); ?></option>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+
+               
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Fecha de Asignaci&oacute;n</label>
+                        <input type="text" class="form-control" name="fechaAsignacion" id="fechaAsignacion"/>
+                    </div>    
+                </div>
+                 <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Fecha de T&eacute;rmino</label>
+                        <input type="text" class="form-control" name="fechaTermino" id="fechaTermino"/>
+                    </div>    
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Horas de Asignacion</label>
+                        <input type="number" min="1" max="100"  onkeydown="validaNumeros()" class="form-control" name="horaAsignadas" id="horaAsignadas"/>
+                    </div>    
+                </div>
+
+                <div class='col-md-12'>
+                    <input type="hidden" name="it_id_tarea_asinar" value="<?php echo $this->_It_id_tarea ?>">
+                    <a class='btn btn-yellow' id='btnModifica' onclick="Modulo.prototype.procesoEnviaForm('form-it', '<?php echo BASE_URL ?>modulo/asignarUsuarioTarea', 'btnModifica', '<?php echo BASE_URL ?>modulo')">Asignar Usuario <span class='fa fa-plus-circle'></span></a>
+                </div> 
+            </div>
+
+
+
+        </form> 
+    </div>
+    <div class="col-md-6" id="enproceso" style="display: none;">
+        <div class="row">
+            <div class="col-md-12" >
+                <a class='btn btn-success' id='btnProceso' onclick="Modulo.prototype.procesoEnviaForm('form-it', '<?php echo BASE_URL ?>modulo/iniciarProceso', 'btnProceso', '<?php echo BASE_URL ?>modulo')">INICIAR TAREA <span class='fa fa-check-circle'></span></a>
+            </div>
+  
+        </div>
+    </div>
+     <div class="col-md-6" id="finalizado" style="display: none;">
+        <div class="row">
+            <div class="col-md-12" >
+                <a class='btn btn-primary' id='btnFinalizado' onclick="Modulo.prototype.procesoEnviaForm('form-it', '<?php echo BASE_URL ?>modulo/finalizarProceso', 'btnFinalizado', '<?php echo BASE_URL ?>modulo')">INICIAR TAREA <span class='fa fa-check-circle'></span></a>
+            </div>
+  
+        </div>
+    </div>
+
+</div>   
+<script>
+    function verDetalle() {
+        $("#detalle").show();
+
+    }
+    function cerrarDetalle() {
+        $("#detalle").hide();
+
+    }
+    function verAsignar() {
+        $("#asignada").show();
+        $("#iniciada").hide();
+        $("#rechazo").hide();
+        $("#enproceso").hide();
+        $("#finalizado").hide();
+
+    }
+    function cerrarAsignada() {
+        $("#asignada").hide();
+
+    }
+    function cerrarRechazo() {
+        $("#rechazo").hide();
+
+    }
+    function cerrarIniciada() {
+        $("#iniciada").hide();
+    }
+
+    $('#it_cmb_estado').change(function () {
+        var id = $(this).val();
+        //alert(id);
+        if (id == 1) {
+            $("#iniciada").hide();
+            $("#rechazo").hide();
+            $("#enproceso").hide();
+            $("#finalizado").hide();
+            $("#asignada").hide();
+        }
+        if (id == 2) {
+            $("#iniciada").show();
+            $("#rechazo").hide();
+            $("#enproceso").hide();
+            $("#finalizado").hide();
+             $("#asignada").hide();
+        }
+        if (id == 3) {
+            $("#enproceso").show();
+            $("#iniciada").hide();
+            $("#rechazo").hide();
+            $("#finalizado").hide();
+             $("#asignada").hide();
+        }
+        if (id == 4) {
+            
+            $("#finalizado").show();
+            $("#rechazo").hide();
+            $("#enproceso").hide();
+            $("#iniciada").hide();
+             $("#asignada").hide();
+        }
+        if (id == 5) {
+            $("#rechazo").show();
+            $("#finalizado").hide();
+            $("#enproceso").hide();
+            $("#iniciada").hide()
+             $("#asignada").hide();
+        }
+
+    });
+
+    $("#fechaAsignacion").datetimepicker();
+    $("#fechaInicio").datetimepicker();
+    $("#fechaTermino").datetimepicker();
+    $("#fechaIncioInicio").datetimepicker();
+    $("#fechaTerminoInicio").datetimepicker();
+
+    //$( "#fechaAsignacion" ).datepicker({ timeFormat:  "hh:mm:ss"});
+
+</script>
+
+
+

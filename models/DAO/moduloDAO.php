@@ -15,10 +15,47 @@ class moduloDAO extends Model{
     }
     
   
+         public function getModuloSist($id){
+         $sql = "select A.nombre, A.idHito, A.Producto_idProducto, B.nombre as nombreproducto, A.estado FROM gestion.hito A"
+                . " inner join gestion.producto B"
+                . " on A.Producto_idProducto = B.idProducto where estado = 'V' and Producto_idProducto = ".$id."";
         
+        //echo $sql;
         
-        public function getModulo($id){
-        $sql = "select A.nombre, A.idHito, A.Producto_idProducto, a.estado FROM gestion.hito A where A.producto_idproducto = ".$id." and estado = 'V'";
+        $datos = $this->_db->consulta($sql);
+        if ($this->_db->numRows($datos) > 0) {
+
+            $modArray = $this->_db->fetchAll($datos);
+            $moArray = array();
+
+            foreach ($modArray as $moddb) {
+                 $modObj = new moduloDTO();
+                 $modObj->setIdHito(trim($moddb['idHito']));
+                 $modObj->setNombre(trim($moddb['nombre']));
+                 $modObj->setEstado(trim($moddb['estado']));
+                 $modObj->setIdProducto(trim($moddb['Producto_idProducto']));
+               
+            $moArray[] = $modObj;                
+            }
+
+            return $moArray;
+        } else {
+            return false;
+        }   
+     }
+        
+        public function getModulo($id, $idUsuario){
+        $sql = "select A.nombre, A.idHito, A.Producto_idProducto, a.estado FROM gestion.hito A "
+                . "inner join hito_usuario hu on A.idHito = hu.Hito_idHito "
+                . "where A.producto_idproducto = ".$id." and estado = 'V'";
+        
+        if (!empty($idUsuario)) {
+            $sql .= " and hu.Usuario_idUsuario = " . $idUsuario;
+        }
+        
+        //echo $sql;
+       
+        
         $datos = $this->_db->consulta($sql);
         if ($this->_db->numRows($datos) > 0) {
 
@@ -75,7 +112,30 @@ class moduloDAO extends Model{
         
     
     }
+     public function cantidadHitosUsuarios($idHito, $idUsuario){
+        $sql = "SELECT  count(Hito_idHito) as cantidad FROM hito_usuario where Hito_idHito = ".$idHito." and Usuario_idUsuario = ".$idUsuario."";
+      
+        $datos = $this->_db->consulta($sql);
+        if ($this->_db->numRows($datos) > 0) {
+
+            $modArray = $this->_db->fetchAll($datos);
+            $moArray = array();
+
+            foreach ($modArray as $moddb) {
+                 $modObj = new moduloDTO();
+                 $modObj->setIdHito(trim($moddb['cantidad']));
+                
+            $moArray[] = $modObj;                
+            }
+
+            return $moArray;
+        } else {
+            return false;
+        }
+        
+        
     
+    }
     
     
     

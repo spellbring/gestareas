@@ -1,0 +1,87 @@
+<?php
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ * Description of tareaController
+ *
+ * @author Beto
+ */
+class tareaController extends Controller{
+    
+    function __construct() {
+        parent::__construct();   
+        $this->_tarea = $this->loadModel("tarea");
+        $this->_modulo = $this->loadModel('modulo');
+        $this->_estado = $this->loadModel('estado');
+        $this->_usuario = $this->loadModel('usuario');
+    }
+    
+    public function index() {
+        if(Session::get('SESS_ID_TIPO_USER') != 3){
+        $idUsuario =  Session::get('SESS_ID_USER');
+        
+        $this->_view->_titulo = "";
+        $modulos = $this->_modulo->getModulo(Session::get("SESS_CLAVE"), $idUsuario);
+        $modelo_tarea = $this->_tarea;
+        $this->_view->_tareas = $modelo_tarea;
+        $this->_view->_moduloProyecto = $modulos;
+        $this->_view->_usuario = $idUsuario;
+        $this->_view->renderizarSistema('mistareas');
+        }
+        else{
+            header('Location: ' . BASE_URL . 'avance');
+        }
+    }
+    
+    public function abreInfoTicket($id) {
+        //Session::set("SESS_MODULO", $id);
+        //TareaDAO
+        $tarea = $this->_tarea->getTareaId($id);
+          $this->_view->_It_id_tarea = $id;
+        if($tarea){
+           $this->_view->_It_tarea = $tarea[0]->getNombre();
+           $this->_view->_It_formulario = $tarea[0]->getFormulario();
+           $this->_view->_It_descripcion_problema = $tarea[0]->getDescripcionTarea();
+           $this->_view->_It_solucion_propuesta = $tarea[0]->getSolucionPropuesta();
+           $this->_view->_It_flujo_correcto = $tarea[0]->getFlujoCorrecto();
+           $this->_view->_It_id_estado = $tarea[0]->getId_estado();
+           $this->_view->_It_nombre_estado = $tarea[0]->getNombre_estado();
+            
+        }
+        //EstadoDAO
+         $estado = $this->_estado->getEstado();
+         $this->_view->_listEstado = $estado;
+         //UsuarioDAO
+        $usuario = $this->_usuario->getUsuarioInterno();
+        $this->_view->_usuarioInterno = $usuario;
+        $this->_view->renderizaCenterBox('informacionTarea');
+    }
+    
+    public function finalizarTarea($id_tarea){
+ 
+      $sql = "update tarea set Estado_idEstado = 4 where idTarea = " .$id_tarea;
+      if($this->_modulo->exeSQL($sql)){       
+         echo 'OK';  
+      }
+      else{
+        echo 'No se ha podido finalizar la tarea, comuníquese con el administrador';  
+      }
+    }
+    
+    public function iniciarTarea($id_tarea){
+
+      $sql = "UPDATE tarea set Estado_idEstado = 3 where idTarea = " . $id_tarea;
+      if($this->_modulo->exeSQL($sql)){         
+         echo "OK";  
+      }
+      else{
+        echo 'No se ha podido iniciar la tarea, comuníquese con el administrador';  
+      }
+    }
+
+}

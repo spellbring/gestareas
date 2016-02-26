@@ -1,59 +1,105 @@
 
 <div class="row">
-
     <div class="col-md-6">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label>Tipo de Estado</label>
-                    <select class="form-control" id="it_cmb_estado">
-                       
-                        <?php
-                        if ($this->_listEstado) {
-                            foreach ($this->_listEstado as $e) {
-                                ?>
-                                <option value="<?php echo $e->getIdEstado() ?>" <?php if ($this->_It_id_estado == $e->getIdEstado()) { ?> selected <?php } ?>><?php echo $e->getNombre() ?></option>
-                                <?php
-                            }
-                        }
-                        ?>
-                    </select>
-                </div>
+        <div class="col-md-12">
+            <?php if ($this->_It_id_estado == 1) { ?> <button class="btn btn-danger">Tarea <?php echo $this->_It_nombre_estado ?></button><?php } ?>
+            <?php if ($this->_It_id_estado == 2) { ?> <button class="btn btn-yellow">Tarea <?php echo $this->_It_nombre_estado ?></button><?php } ?>
+            <?php if ($this->_It_id_estado == 3) { ?> <button class="btn btn-success">Tarea <?php echo $this->_It_nombre_estado ?></button><?php } ?>
+            <?php if ($this->_It_id_estado == 4) { ?> <button class="btn btn-primary">Tarea <?php echo $this->_It_nombre_estado ?></button><?php } ?>
 
+
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>Trabajo Solicitado</label>
+                <input type="text" readonly="true" class="form-control" value="<?php echo $this->_It_tarea ?>">
             </div>
-            <div class="col-md-12">
-                
-                <button onclick="verDetalle();" class="btn btn-primary">Ver Detalle</button>
-                <button onclick="verAsignar();" class="btn btn-yellow">Asignar Tarea a Usuario</button>
-                <h3>Tarea: <?php echo $this->_It_tarea ?></h3>
-                <div id="detalle" style="display: none;">
-                    <br>
-                    <button onclick="cerrarDetalle();" class="btn btn-primary">Ocultar Detalle</button>
-                   
-                    <div class="form-group">
-                         <br>
-                        <textarea class="form-control" readonly="true"><?php echo $this->_It_descripcion_problema ?></textarea>
-                    </div>
-                    
-                </div>
-
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>Descripci&oacute;n del problema</label>
+                <textarea type="text" readonly="true" class="form-control"><?php echo $this->_It_descripcion_problema ?></textarea>
             </div>
-
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>Soluci&oacute;n Propuesta</label>
+                <textarea type="text" readonly="true" class="form-control"><?php echo $this->_It_solucion_propuesta ?></textarea>
+            </div>
         </div>
 
 
+    </div>
+
+    <div class="col-md-6">
+        <?php
+        if ($this->_It_id_estado == 1) {
+            ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="btn btn-danger">Rechazar Tarea</button>
+                </div>
+
+            </div>
+        <br>
+            <?php
+        }
+        ?>
+        <div class="row">
+
+            <?php
+            if ($this->_It_id_estado == 1) {
+                ?>
+                <div class="col-md-12">
+                    <button class="btn btn-yellow" onclick="iniciar()">Iniciar Tarea</button>
+                </div>
+                <?php
+            }
+            ?>
+            <?php
+            if ($this->_It_id_estado == 2) {
+                ?>
+            <form class="formProceso">
+                 <div class="col-md-12" >
+                    <input type="hidden" name="it_id_tarea_proceso" value="<?php echo $this->_It_id_tarea ?>">
+                    <a class='btn btn-success' id='btnProceso' onclick="Modulo.prototype.procesoEnviaForm('formProceso', '<?php echo BASE_URL ?>modulo/iniciarProceso', 'btnProceso', '<?php echo BASE_URL ?>modulo')">INICIAR TAREA <span class='fa fa-check-circle'></span></a>
+                </div>
+            </form>
+                
+            <?php
+            }
+            ?>
+            <?php
+            if ($this->_It_id_estado == 3) {
+                ?>
+            <form class="formFinalizado">
+                <div class="col-md-12" >
+                    <input type="hidden" name="it_id_tarea_finalizado" value="<?php echo $this->_It_id_tarea ?>">
+                    <a class='btn btn-primary' id='btnFinalizado' onclick="Modulo.prototype.procesoEnviaForm('formFinalizado', '<?php echo BASE_URL ?>modulo/finalizarProceso', 'btnFinalizado', '<?php echo BASE_URL ?>modulo')">FINALIZAR TAREA <span class='fa fa-check-circle'></span></a>
+                </div>
+            </form>
+               
+             <?php
+                }
+                ?>
+
+
+        </div>
+        <br>
+
 
     </div>   
-    
+
     <div class="col-md-6" id="rechazo" style="display: none" >
         <br>
-        <button onclick="cerrarRechazo();" class="btn btn-primary">Ocultar</button>
+<!--        <button onclick="cerrarRechazo();" class="btn btn-primary">Ocultar</button>-->
         <form class="formMotivoRechazo">
             <div class="row">
                 <div class="col-md-12">
                     <br>
+                    <input type="hidden" name="it_id_tarea_rechazo" value="<?php echo $this->_It_id_tarea ?>">
                     <label>Motivo de rechazo</label>
-                    <textarea style="height: 300px" class="form-control" name="descripcion" placeholder="Escriba un motivo de rechazo"></textarea>
+                    <textarea style="height: 300px" class="form-control" name="it_descripcion_tarea_rechazo" placeholder="Escriba un motivo de rechazo"></textarea>
                 </div>
                 <div class="col-md-12">
                     <br>
@@ -62,16 +108,16 @@
             </div>
         </form>
     </div> 
-    
-    <div class="col-md-6"  id="iniciada" style="display: none;">
-        <button onclick="cerrarIniciada();" class="btn btn-primary">Ocultar</button>
+
+    <div class="col-md-6"  id="iniciada" style="display: none;" >
+<!--        <button onclick="cerrarIniciada();" class="btn btn-primary">Ocultar</button>-->
         <form class="formIniciar">
             <div class="row">
 
                 <div class="col-md-12"  >
 
                     <div class="form-group">
-                        <label>Fecha de Inicio</label>
+                        <label>Fecha de Inicio de Tarea</label>
                         <input type="text" class="form-control" name="fechaIncioInicio" id="fechaIncioInicio"/>
                     </div>    
 
@@ -79,24 +125,11 @@
                 <div class="col-md-12" >
 
                     <div class="form-group">
-                        <label>Fecha de T&eacute;rmino</label>
+                        <label>Fecha de T&eacute;rmino de Tarea</label>
                         <input type="text" class="form-control" name="fechaTerminoInicio" id="fechaTerminoInicio"/>
                     </div>    
 
                 </div>
-                <div class="col-md-12">
-                    <a class='btn btn-yellow' id='btnModifica' onclick="Modulo.prototype.procesoEnviaForm('formIniciar', '<?php echo BASE_URL ?>modulo/asignarUsuarioTarea', 'btnModifica', '<?php echo BASE_URL ?>modulo')">Iniciar</a>
-                </div>
-            </div>
-
-        </form> 
-    </div>
-
-    <div class="col-md-6" id="asignada" style="display: none;" >
-         <button onclick="cerrarAsignada();" class="btn btn-primary">Ocultar</button>
-        <form class="form-it">
-            <div class="row">
-
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Asignar Tarea Cliente Interno</label>
@@ -115,73 +148,48 @@
                     </div>
                 </div>
 
+
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label>Fecha de T&eacute;rmino</label>
-                        <input type="text" class="form-control" name="fechaTermino" id="fechaTermino"/>
-                    </div>    
-                </div>
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label>Fecha de Asignaci&oacute;n</label>
+                        <label>Fecha de Asignaci&oacute;n De Tarea</label>
                         <input type="text" class="form-control" name="fechaAsignacion" id="fechaAsignacion"/>
                     </div>    
                 </div>
-
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label>Horas de Asignacion</label>
-                        <input type="number" min="1" max="100"  onkeydown="validaNumeros()" class="form-control" name="horaAsignadas" id="horaAsignadas"/>
+                        <label>Fecha de T&eacute;rmino de Asignaci&oacute;n</label>
+                        <input type="text" class="form-control" name="fechaTermino" id="fechaTermino"/>
                     </div>    
                 </div>
 
-                <div class='col-md-12'>
-                    <a class='btn btn-yellow' id='btnModifica' onclick="Modulo.prototype.procesoEnviaForm('form-it', '<?php echo BASE_URL ?>modulo/asignarUsuarioTarea', 'btnModifica', '<?php echo BASE_URL ?>modulo')">Asignar Usuario <span class='fa fa-plus-circle'></span></a>
-                </div> 
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Horas de Asignaci&oacute;n</label>
+                        <input type="number" min="1" max="100"  onkeydown="validaNumeros()" class="form-control" name="horaAsignadas" id="horaAsignadas"/>
+                    </div>    
+                </div>
+                <div class="col-md-12">
+                    <input type="hidden" name="it_id_tarea_iniciar" value="<?php echo $this->_It_id_tarea ?>">
+                    <input type="hidden" name="it_id_hito_iniciar" value="<?php echo $this->_It_id_hito ?>">
+                    <a class='btn btn-yellow' id='btnIniciar' onclick="Modulo.prototype.procesoEnviaForm('formIniciar', '<?php echo BASE_URL ?>modulo/iniciarTarea', 'btnIniciar', '<?php echo BASE_URL ?>modulo')">Iniciar</a>
+                </div>
             </div>
-
-
 
         </form> 
     </div>
-    <div class="col-md-6" id="enproceso" style="display: none;">
-        <div class="row">
-            <div class="col-md-12" >
-                <a class='btn btn-success' id='btnProceso' onclick="Modulo.prototype.procesoEnviaForm('form-it', '<?php echo BASE_URL ?>modulo/iniciarProceso', 'btnProceso', '<?php echo BASE_URL ?>modulo')">INICIAR TAREA <span class='fa fa-check-circle'></span></a>
-            </div>
-  
-        </div>
-    </div>
-     <div class="col-md-6" id="finalizado" style="display: none;">
-        <div class="row">
-            <div class="col-md-12" >
-                <a class='btn btn-primary' id='btnFinalizado' onclick="Modulo.prototype.procesoEnviaForm('form-it', '<?php echo BASE_URL ?>modulo/finalizarProceso', 'btnFinalizado', '<?php echo BASE_URL ?>modulo')">INICIAR TAREA <span class='fa fa-check-circle'></span></a>
-            </div>
-  
-        </div>
-    </div>
+
+    
+
+    
 
 </div>   
 <script>
-    function verDetalle() {
-        $("#detalle").show();
-
-    }
-    function cerrarDetalle() {
-        $("#detalle").hide();
-
-    }
-    function verAsignar() {
-        $("#asignada").show();
-        $("#iniciada").hide();
+    function iniciar(){
+        $("#iniciada").show();
         $("#rechazo").hide();
         $("#enproceso").hide();
         $("#finalizado").hide();
-
-    }
-    function cerrarAsignada() {
         $("#asignada").hide();
-
     }
     function cerrarRechazo() {
         $("#rechazo").hide();
@@ -206,36 +214,38 @@
             $("#rechazo").hide();
             $("#enproceso").hide();
             $("#finalizado").hide();
-             $("#asignada").hide();
+            $("#asignada").hide();
         }
         if (id == 3) {
             $("#enproceso").show();
             $("#iniciada").hide();
             $("#rechazo").hide();
             $("#finalizado").hide();
-             $("#asignada").hide();
+            $("#asignada").hide();
         }
         if (id == 4) {
-            
+
             $("#finalizado").show();
             $("#rechazo").hide();
             $("#enproceso").hide();
             $("#iniciada").hide();
-             $("#asignada").hide();
+            $("#asignada").hide();
         }
         if (id == 5) {
             $("#rechazo").show();
             $("#finalizado").hide();
             $("#enproceso").hide();
             $("#iniciada").hide()
-             $("#asignada").hide();
+            $("#asignada").hide();
         }
 
     });
 
-    $("#fechaAsignacion").datetimepicker()
-    $("#fechaInicio").datetimepicker()
-    $("#fechaTermino").datetimepicker()
+    $("#fechaAsignacion").datetimepicker();
+    $("#fechaInicio").datetimepicker();
+    $("#fechaTermino").datetimepicker();
+    $("#fechaIncioInicio").datetimepicker();
+    $("#fechaTerminoInicio").datetimepicker();
 
     //$( "#fechaAsignacion" ).datepicker({ timeFormat:  "hh:mm:ss"});
 

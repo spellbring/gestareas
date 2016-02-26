@@ -1,0 +1,91 @@
+<div class="row">
+
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Tarea: <?php echo $this->_It_tarea ?></h4>
+                <h4><label id="lblEstado">Estado: <?php echo $this->_It_nombre_estado ?></label></h4>
+                <br>
+                <!--                <div class="form-group">
+                                    <label>Tipo de Estado</label>
+                                    <select class="form-control" id="it_cmb_estado">
+                
+                <?php
+                if ($this->_listEstado) {
+                    foreach ($this->_listEstado as $e) {
+                        ?>
+                                                        <option value="<?php echo $e->getIdEstado() ?>" <?php if ($this->_It_id_estado == $e->getIdEstado()) { ?> selected <?php } ?>><?php echo $e->getNombre() ?></option>
+                        <?php
+                    }
+                }
+                ?>
+                                    </select>
+                                </div>-->
+
+            </div>
+            <div class="col-md-12">
+
+                <button onclick="verDetalle();" class="btn btn-primary">Ver Detalle</button>
+                <div id="detalle" style="display: none;">
+                    <br>
+                    <button onclick="cerrarDetalle();" class="btn btn-primary">Ocultar Detalle</button>
+
+                    <div class="form-group">
+                        <br>
+                        <textarea class="form-control" readonly="true"><?php echo $this->_It_descripcion_problema ?></textarea>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+    </div>   
+
+    <div class="col-md-6" id="finalizado" style="display: none;">
+        <div class="row">
+            <div class="col-md-12" >
+                <a class='btn btn-yellow' id='btnFinalizado' onclick="Tarea.prototype.procesoEnviaForm('form-it', '<?php echo BASE_URL ?>tarea/finalizarTarea/<?php echo $this->_It_id_tarea ?>', 'btnFinalizado', '<?php echo BASE_URL ?>tarea')">Finalizar <span class='fa fa-check-circle'></span></a>
+            </div>
+
+        </div>
+    </div>
+    
+    <div class="col-md-6" id="iniciado" style="display: none;">
+        <div class="row">
+            <div class="col-md-12" >
+                <a class='btn btn-yellow' id='btnIniciado' onclick="Tarea.prototype.procesoEnviaForm('form-it', '<?php echo BASE_URL ?>tarea/iniciarTarea/<?php echo $this->_It_id_tarea ?>', 'btnIniciado', '<?php echo BASE_URL ?>tarea')">Iniciar <span class='fa fa-check-circle'></span></a>
+            </div>
+        </div>
+    </div>
+
+</div>   
+<script>
+
+    function verDetalle() {
+        $("#detalle").show();
+    }
+    function cerrarDetalle() {
+        $("#detalle").hide();
+    }
+
+    var texto = $('#lblEstado').text().trim();
+
+    if (texto === 'Estado: En Proceso') {
+            $("#finalizado").show();
+    } else if(texto === 'Estado: Iniciada'){
+            $("#iniciado").show();
+    }else{
+        
+    }
+
+
+
+</script>
+
+
+
+

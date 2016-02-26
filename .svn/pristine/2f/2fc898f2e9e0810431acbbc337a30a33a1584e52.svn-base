@@ -1,0 +1,114 @@
+
+<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+    <div class="page-header pull-left">
+        <div class="page-title">
+            <i class="fa fa-tasks fa-2x" style="font-size: 30px"></i>&nbsp <?php echo $this->_titulo ?></div>
+    </div>
+    <ol class="breadcrumb page-breadcrumb pull-right">
+        <li><i class="fa fa-home"></i>&nbsp;<a href="sistema">Inicio</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+        <li class="hidden"><a href="#"><?php echo $this->_titulo ?></a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+        <li class="active"><?php echo $this->_titulo ?></li>
+    </ol>
+    <div class="clearfix">
+    </div>
+</div>
+
+<div class="page-content">
+    <div class="panel panel-grey">
+        <div class="panel-heading"><?php echo $this->_tituloPanel ?> &nbsp <i class="fa fa-check-square-o" style="font-size: 20px"></i></div>
+        <div class="panel-body">
+            
+            <div class="table-responsive">
+                <table class="table" id="tabla">
+                    <thead>
+                        <tr>
+                            <th><strong>Proyecto</strong></th>
+                            <th><strong>Modulo</strong></th>
+                            <th><strong>Tarea</strong></th>
+                            <th><strong>Problema</strong></th>
+                            <th><strong>Estado</strong></th>
+                            <th><strong>Nivel</strong></th>
+                            <th><strong>Desarrollador</strong></th>
+                        </tr>
+                    </thead>
+                    <?php
+                    if ($this->_avances) {
+
+                        foreach ($this->_avances as $a) {
+                            ?>
+                            <tbody id="body">
+                                <tr>                                 
+                                    <td><?php echo $a->getNombre_proyecto() ?></td>
+                                    <td><?php echo $a->getNombre_modulo() ?></td>
+                                    <td><?php echo $a->getNombre_tarea() ?></td>
+                                    <td><?php echo $a->getDesc_tarea() ?></td>
+                                    <td><?php echo $a->getEstado() ?></td>
+                                    <td><?php echo $a->getNivel() ?></td>
+                                    <td><?php echo $a->getDesarrollador() ?></td>
+
+                                </tr>
+                            </tbody>
+
+                            <?php
+                        }
+                    }
+                    ?>
+
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-grey">
+        <div class="panel-heading">Solicitudes en espera &nbsp <i class="fa fa-clock-o" style="font-size: 20px"></i></div>
+        <div class="panel-body">
+            
+            <div class="table-responsive">
+                <table class="table" id="tabla">
+                    <thead>
+                        <tr>
+                            <th><strong>Proyecto</strong></th>
+                            <th><strong>Modulo</strong></th>
+                            <th><strong>Tarea</strong></th>
+                            <th><strong>Problema</strong></th>
+                            <th><strong>Estado</strong></th>
+                            <th><strong>Nivel</strong></th>
+                        </tr>
+                    </thead>
+                    <?php
+                    if ($this->_avances2) {
+
+                        foreach ($this->_avances2 as $a2) {
+                            ?>
+                            <tbody id="body">
+                                <tr>                                 
+                                    <td><?php echo $a2->getNombre_proyecto() ?></td>
+                                    <td><?php echo $a2->getNombre_modulo() ?></td>
+                                    <td><?php echo $a2->getNombre_tarea() ?></td>
+                                    <td><?php echo $a2->getDesc_tarea() ?></td>
+                                    <td><?php echo $a2->getEstado() ?></td>
+                                    <td><?php echo $a2->getNivel() ?></td>
+                                    <td><?php echo $a2->getDesarrollador() ?></td>
+
+                                </tr>
+                            </tbody>
+
+                            <?php
+                        }
+                    }
+                    ?>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+    <script type="text/javascript" src="<?php echo $_layoutParams['ruta_js']; ?>jquery-2.1.4.min.js"></script>
+    <script src="<?php echo $_layoutParams["ruta_template"] ?>script/jquery-ui.js"></script>
+
+<script>
+   
+
+</script>
+
+
+

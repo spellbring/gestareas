@@ -1,0 +1,34 @@
+<?php
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ * Description of avanceController
+ *
+ * @author Beto
+ */
+class avanceController extends Controller {
+
+    function __construct() {
+        parent::__construct();
+        $this->_modelo = $this->loadModel('avance');
+    }
+
+    public function index() {
+        
+        $this->_view->_tituloPanel = "Tareas solicitadas";
+        $this->_view->_titulo = "Avances";
+                                                     //usuario Dino Sename 
+        $avances = $this->_modelo->getAvances(Session::get('SESS_ID_USER'));
+        $this->_view->_avances = $avances;
+        
+        $avances2 = $this->_modelo->getAvances(Session::get('SESS_ID_USER'), true);
+        $this->_view->_avances2 = $avances2;
+        $this->_view->renderizarSistema('avance');
+    }
+
+}
