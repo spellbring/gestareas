@@ -2,12 +2,12 @@
 
 define('DEFAULT_CONTROLLER', 'index');//en el caso de que no se envie el controlador en la url se llama al index
 define('DEFAULT_LAYOUT', 'default');
-define('BASE_URL', 'http://192.168.0.29/GestionTareas/');
+define('BASE_URL', 'http://localhost/GestionTareas/');
 
 define('APP_NAME','Gestión de Tareas');
 define('APP_SLOGAN','Plataforma Estratégica Global');
 define('APP_COMPANY','www.peg.cl');
-define('COMPANY', 'Fresno');
+define('COMPANY', 'PEG');
 
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');

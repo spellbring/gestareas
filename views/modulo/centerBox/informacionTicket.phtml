@@ -75,6 +75,7 @@
             <form class="formFinalizado">
                 <div class="col-md-12" >
                     <input type="hidden" name="it_id_tarea_finalizado" value="<?php echo $this->_It_id_tarea ?>">
+                    <input type="hidden" name="it_nombre_tarea_finalizado" value="<?php echo $this->_It_tarea ?>">
                     <a class='btn btn-primary' id='btnFinalizado' onclick="Modulo.prototype.procesoEnviaForm('formFinalizado', '<?php echo BASE_URL ?>modulo/finalizarProceso', 'btnFinalizado', '<?php echo BASE_URL ?>modulo')">FINALIZAR TAREA <span class='fa fa-check-circle'></span></a>
                 </div>
             </form>
@@ -171,6 +172,7 @@
                 <div class="col-md-12">
                     <input type="hidden" name="it_id_tarea_iniciar" value="<?php echo $this->_It_id_tarea ?>">
                     <input type="hidden" name="it_id_hito_iniciar" value="<?php echo $this->_It_id_hito ?>">
+                    <input type="hidden" name="it_nombre_tarea" value="<?php echo $this->_It_tarea ?>">
                     <a class='btn btn-yellow' id='btnIniciar' onclick="Modulo.prototype.procesoEnviaForm('formIniciar', '<?php echo BASE_URL ?>modulo/iniciarTarea', 'btnIniciar', '<?php echo BASE_URL ?>modulo')">Iniciar</a>
                 </div>
             </div>

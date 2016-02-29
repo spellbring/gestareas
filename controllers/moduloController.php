@@ -119,7 +119,7 @@ class moduloController extends Controller {
         $consulta = $this->_tarea->exeSQL($sql);
         if ($consulta) {
            
-                if($this->correo($descripcionProblema)){
+                if($this->correo($nombreTicket, $descripcionProblema, $fechaReporte, 'Solicitud de tarea', Session::get('SESS_NOMBRE'), 'jreyes@peg.cl' )){
                     echo "OK";
                     
                 }
@@ -169,18 +169,20 @@ class moduloController extends Controller {
         //$this->_view->renderizaCenterBox('solicitudTarea');
     }
 
-    public function correo($descripcionProblema){
+    public function correo($nombreTarea, $descripcionTarea, $fechaReporte, $tipo, $usuarioNombre, $correo){
         $html = file_get_contents(ROOT . 'views' . DS . 'sistema' . DS . 'correos' . DS . 'tarea.html');
-            $reempl = array('Titulo' => 'Asunto Prueba',
-                'descripcion proceso' => 'Un comentario para describir el proceso',
-                'Descripcion' => 'se ha asignado una tarea a Jaime Reyes Romero'
+            $reempl = array('Titulo' => $nombreTarea,
+                'descripcionTarea' => $descripcionTarea,
+                'FechaReporte' => $fechaReporte,
+                'Tipo' => $tipo,
+                'NombreApellidoUser' => $usuarioNombre
             );
 
             foreach ($reempl as $nombre => $valor) {
                 $html = str_replace('{' . $nombre . '}', $valor, $html);
             }
 
-            if (!empty($descripcionProblema)) {
+            if (!empty($nombreTarea)) {
                 //--------------------------Configuracion Correo---------------------  
                 $this->getLibrary('PHPMailerAutoload');
                 $mail = new PHPMailer();
@@ -196,11 +198,104 @@ class moduloController extends Controller {
                 $mail->FromName = 'Solicitud de trabajo';
                 $mail->CharSet = CHARSET;
                 $mail->Subject = 'Asignación de trabajo: ';
-                $mail->Body = $descripcionProblema;
+                $mail->Body = "";
 
                 $mail->MsgHTML($html);
 
-                $mail->AddAddress('jreyes@peg.cl', "Jaime Reyes");
+                $mail->AddAddress($correo, $usuarioNombre);
+                if ($mail->Send()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+    }
+    
+    public function correoIniciar($nombreTarea, $fechaInicio, $fechaTermino,$fechaAsignacion, $fechaFinalizacion, $usuarioNombre, $horas, $correo, $correoSession, $nombreUsuario){
+        $html = file_get_contents(ROOT . 'views' . DS . 'sistema' . DS . 'correos' . DS . 'tareaIniciada.html');
+            $reempl = array('Titulo' => $nombreTarea,
+                'nombreUsuario' => $usuarioNombre,
+                'FechaInicio' => $fechaInicio,
+                'FechaTermino' => $fechaTermino,
+                'FechaAsignacion' => $fechaAsignacion,
+                'FechaFinalizacion' => $fechaFinalizacion,
+                'Horas' => $horas,
+                'Tipo' => 'Inicio de Tarea'
+                
+            );
+
+            foreach ($reempl as $nombre => $valor) {
+                $html = str_replace('{' . $nombre . '}', $valor, $html);
+            }
+
+            if (!empty($nombreTarea)) {
+                //--------------------------Configuracion Correo---------------------  
+                $this->getLibrary('PHPMailerAutoload');
+                $mail = new PHPMailer();
+                $mail->IsSMTP();
+                $mail->SMTPAuth = true;
+                $mail->SMTPSecure = "ssl";
+                $mail->Port = 465;
+                $mail->Host = "smtp.gmail.com";
+                $mail->Username = "jreyes@peg.cl";
+                $mail->Password = "123DnD123!";
+
+                $mail->From = 'jreyes@peg.com';
+                $mail->FromName = 'Asignación de trabajo';
+                $mail->CharSet = CHARSET;
+                $mail->Subject = 'Asignación de trabajo: ';
+                $mail->Body = "";
+
+                $mail->MsgHTML($html);
+
+                $mail->AddAddress($correo, $usuarioNombre);
+                $mail->AddAddress($correoSession,$nombreUsuario);
+                if ($mail->Send()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+    }
+    public function correoFinalizar($nombreTarea, $fechaFinalizacion, $usuarioNombre, $correo, $correoSession, $nombreSession){
+        $html = file_get_contents(ROOT . 'views' . DS . 'sistema' . DS . 'correos' . DS . 'tareaFinalizada.html');
+            $reempl = array('Titulo' => $nombreTarea,
+                'nombreUsuario' => $usuarioNombre,
+                'FechaFinalizacion' => $fechaFinalizacion,
+                'Tipo' => 'Finalizaci&oacute;n de tarea'
+                
+            );
+
+            foreach ($reempl as $nombre => $valor) {
+                $html = str_replace('{' . $nombre . '}', $valor, $html);
+            }
+
+            if (!empty($nombreTarea)) {
+                //--------------------------Configuracion Correo---------------------  
+                $this->getLibrary('PHPMailerAutoload');
+                $mail = new PHPMailer();
+                $mail->IsSMTP();
+                $mail->SMTPAuth = true;
+                $mail->SMTPSecure = "ssl";
+                $mail->Port = 465;
+                $mail->Host = "smtp.gmail.com";
+                $mail->Username = "jreyes@peg.cl";
+                $mail->Password = "123DnD123!";
+
+                $mail->From = 'jreyes@peg.com';
+                $mail->FromName = 'Finalización de trabajo';
+                $mail->CharSet = CHARSET;
+                $mail->Subject = 'Finalización de trabajo: ';
+                $mail->Body = "";
+
+                $mail->MsgHTML($html);
+
+                $mail->AddAddress($correo, $usuarioNombre);
+                $mail->AddAddress($correoSession, $nombreSession);
                 if ($mail->Send()) {
                     return true;
                 } else {
@@ -215,7 +310,7 @@ class moduloController extends Controller {
         $fechaReporte = date('Y.m.d');
         //echo $fechaReporte;
         $modulo = $this->getTexto("st_hito");
-        ;
+        
         $nombreTicket = $this->getTexto("it_txtNombreTicket");
         $formularioObjetivo = $this->getTexto("it_txtFormularioObjetivo");
         $descripcionProblema = $this->getTexto("it_txtaDescripcionProblema");
@@ -231,7 +326,7 @@ class moduloController extends Controller {
                 '" . $solucionPropuesta . "',1," . $prioridad . "," . $modulo . "," . $tipologia . ",". Session::get('SESS_ID_USER').");";
         $consulta = $this->_tarea->exeSQL($sql);
         if ($consulta) {
-            if($this->correo($descripcionProblema)){
+            if($this->correo($nombreTicket,$descripcionProblema, $fechaReporte, 'Solicitud de tarea', Session::get('SESS_NOMBRE'), 'jreyes@peg.cl' )){
                 echo "OK";
             }
             else{
@@ -291,6 +386,7 @@ class moduloController extends Controller {
     }
 
     public function iniciarTarea() {
+        //Variables a utilizar
         $fechaInicio = $this->getTexto("fechaIncioInicio");
         $fechaTermino = $this->getTexto("fechaTerminoInicio");
         $id_tarea = $this->getTexto("it_id_tarea_iniciar");
@@ -300,11 +396,24 @@ class moduloController extends Controller {
         $fechaAsignacion = $this->getTexto("fechaAsignacion");
         $fechaFinalizacion = $this->getTexto("fechaTermino");
         $horasDias = $this->getTexto("horaAsignadas");
+        $nombreTarea = $this->getTexto("it_nombre_tarea");
+        $nombreUsuario = "";
+        //$correo = "";
         
         //Hito
         $hito = $this->getTexto("it_id_hito_iniciar");
         $sql1 = "INSERT INTO gestion.tarea_usuario(Tarea_idTarea, Usuario_idUsuario, fechaAsignacion, horasDia, fechaTerminoActividad) VALUES (" . $id_tarea1 . "," . $id_usuario . ", '" . $fechaAsignacion . "'," . $horasDias . ", '" . $fechaFinalizacion . "')";
         $cantidadRegistros = $this->_modulo->cantidadHitosUsuarios($hito, $id_usuario);
+        //echo $id_usuario;
+        //Usuarios para obtener el nombre, este tiene que ser mostrado en el correo electrónico
+        $usuarios1 = $this->_usuario->getUsuarioId($id_usuario);  
+        //if($usuarios){
+        //var_dump($usuarios1);
+        $nombreUsuario = $usuarios1[0]->getNombre().' '.$usuarios1[0]->getApellido();
+        $correo = $usuarios1[0]->getEmail();
+        //}
+                
+        //Logica del método
         if($cantidadRegistros){
             if($cantidadRegistros[0]->getIdHito() < 1){
                 $sql3 = "INSERT INTO gestion.hito_usuario (Hito_idHito, Usuario_idUsuario) VALUES (".$hito.",".$id_usuario.") ";
@@ -313,8 +422,13 @@ class moduloController extends Controller {
         }
         if ($this->_modulo->exeSQL($sql)) {
             if ($this->_modulo->exeSQL($sql1)) {
-
-                     echo "OK";
+                    if($this->correoIniciar($nombreTarea, $fechaInicio, $fechaTermino, $fechaAsignacion,  $fechaFinalizacion, $nombreUsuario, $horasDias, $correo, Session::get('SESS_CORREO'), Session::get('SESS_NOMBRE')) == true){
+                         echo "OK"; 
+                    }
+                    else{
+                        echo "No se pudo enviar el correo electrónico al destinatario"; 
+                    }
+                   
             }
             else{
                   echo 'No se ha podido iniciar la tarea, comuníquese con el administrador';
@@ -342,20 +456,72 @@ class moduloController extends Controller {
     }
 
     public function finalizarProceso() {
-
+        $fechaReporte = date('Y.m.d H:i:s');
+        $nombre_tarea = $this->getTexto("it_nombre_tarea_finalizado");
         $id_tarea = $this->getTexto("it_id_tarea_finalizado");
         $id_usuario = Session::get("SESS_ID_USER");
+        $nombre_usuario = Session::get("SESS_NOMBRE");
+        //$correo = Session::get("SESS_CORREO");
         $sql = "UPDATE gestion.tarea_usuario set fechaFinalizacion = current_timestamp() where Tarea_idTarea = " . $id_tarea . " and Usuario_idUsuario = " . $id_usuario . ";";
         $sql2 = "UPDATE gestion.tarea set Estado_idEstado = 4 where idTarea = " . $id_tarea . "";
+        
+        $usuarioTarea = $this->_usuario->getUsuarioTarea($id_tarea);
+        
+        $nombre = $usuarioTarea[0]->getNombre()." ".$usuarioTarea[0]->getApellido();
+        $correo = $usuarioTarea[0]->getEmail();
         if ($this->_modulo->exeSQL($sql)) {
             if ($this->_modulo->exeSQL($sql2)) {
-                echo "OK";
+                if($this->correoFinalizar($nombre_tarea, $fechaReporte, $nombre, $correo, 'jreyes@peg.cl', $nombre_usuario)){
+                     echo "OK";
+                }
+                else{
+                    echo "No se pudo enviar el correo";
+                }
+               
             } else {
+                
                 echo 'No se ha podido dejar en estado en proceso, comuníquese con el administrador';
             }
         } else {
             echo 'No se ha podido dejar en estado en proceso, comuníquese con el administrador';
         }
     }
+
+    public function abreAsignaUsuarioProducto(){
+        $usuario = $this->_usuario->getUsuario("");
+        $proyecto = $this->_proyecto->getTodosProyectos();
+        
+        $this->_view->proyectos = $proyecto;
+        $this->_view->usuarios = $usuario;
+        $this->_view->renderizaCenterBox('asignaUsuarioProducto');
+    }
+    
+    public function insertUsuarioProyecto(){
+        $usuario = $this->getTexto('sel_usuario');
+        $proyecto = $this->getTexto('sel_proyecto');
+        $consultaProyectoUsuario = $this->_proyecto->getProyectoUsuario($proyecto, $usuario);
+       
+            if($consultaProyectoUsuario[0]->getId_producto()){
+                   echo "No se puede"; 
+            }
+            else{
+               $sql = "INSERT INTO gestion.producto_usuario (producto_idProducto, usuario_idUsuario) VALUES (".$proyecto.", ".$usuario.")";
+                    if($this->_modulo->exeSQL($sql)){
+                       echo "OK"; 
+                    }
+                    else{
+                        echo "No se ha podido asignar un proyecto al usuario especificado"; 
+                    } 
+
+            }
+        }
+       
+        
+        
+        
+        
+               
+        
+    
 
 }

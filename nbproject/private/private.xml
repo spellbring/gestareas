@@ -6,13 +6,12 @@
             <file>file:/C:/wamp/www/GestionTareas/controllers/moduloController.php</file>
             <file>file:/C:/wamp/www/GestionTareas/views/modulo/centerBox/informacionTicket.phtml</file>
             <file>file:/C:/wamp/www/GestionTareas/models/DAO/moduloDAO.php</file>
-            <file>file:/C:/wamp/www/GestionTareas/models/DAO/tareaDAO.php</file>
-            <file>file:/C:/wamp/www/GestionTareas/views/modulo/centerBox/admModuloInsert.phtml</file>
+            <file>file:/C:/wamp/www/GestionTareas/controllers/loginController.php</file>
+            <file>file:/C:/wamp/www/GestionTareas/views/sistema/correos/tareaFinalizada.html</file>
             <file>file:/C:/wamp/www/GestionTareas/views/layout/default/header.php</file>
-            <file>file:/C:/wamp/www/GestionTareas/views/modulo/centerBox/ingresoTicket.phtml</file>
-            <file>file:/C:/wamp/www/GestionTareas/views/modulo/centerBox/solicitudTarea.phtml</file>
-            <file>file:/C:/wamp/www/GestionTareas/views/modulo/modulo.phtml</file>
-            <file>file:/C:/wamp/www/GestionTareas/models/DTO/tareaDTO.php</file>
+            <file>file:/C:/wamp/www/GestionTareas/models/DAO/usuarioDAO.php</file>
+            <file>file:/C:/wamp/www/GestionTareas/models/DTO/usuarioDTO.php</file>
+            <file>file:/C:/wamp/www/GestionTareas/views/sistema/correos/tareaIniciada.html</file>
         </group>
     </open-files>
 </project-private>

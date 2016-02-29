@@ -158,7 +158,7 @@
                 <ul id="side-menu" class="nav">
                     
                      <div class="clearfix"></div>
-                    <?php if(Session::get('SESS_ID_TIPO_USER') == 0){?>
+                    <?php if(Session::get('SESS_ID_TIPO_USER') == 0 || Session::get('SESS_ID_TIPO_USER') == 1 ){?>
                             
   
                     <li><a href="<?php echo BASE_URL?>sistema"><i class="fa fa-bullseye fa-fw">
@@ -189,17 +189,24 @@
                        
                     </li>
                     
+                      <li><a data-toggle="modal" href="#myModal"  onClick="Modulo.prototype.abreModal('<?php echo BASE_URL ?>modulo/abreSolicitudTareas','Crear nueva solicitud de tarea', '')"><i class="fa fa-plus fa-fw">
+                        <div class="icon-bg bg-pink"></div>
+                            </i><span class="menu-title">Crear nueva solicitud de tarea</span></a>
+                       
+                    </li>
+                      <li><a data-toggle="modal" href="#myModal"  onClick="Modulo.prototype.abreModal('<?php echo BASE_URL ?>modulo/abreAsignaUsuarioProducto',' Asignar Usuario a Proyecto', '')"><i class="fa fa-plus fa-fw">
+                        <div class="icon-bg bg-pink"></div>
+                            </i><span class="menu-title">Asignar Usuario a proyecto</span></a>
+                       
+                    </li>
+                    
+                    
+                    
                     
                     <?php 
                     }
                     ?>
-                    <?php if(Session::get('SESS_ID_TIPO_USER')== 1){ ?>
-                    <li><a href="<?php echo BASE_URL?>sistema"><i class="fa fa-bullseye fa-fw">
-                        <div class="icon-bg bg-pink"></div>
-                            </i><span class="menu-title">Monitor de Tareas</span></a>
-                       
-                    </li>
-                    <?php } ?>
+                    
                      <?php if(Session::get('SESS_ID_TIPO_USER')== 2){ ?>
                     <li><a data-toggle="modal" href="#myModal"  onClick="Modulo.prototype.abreModal('<?php echo BASE_URL ?>modulo/abreSolicitudTareas','Crear nueva solicitud de tarea', '')"><i class="fa fa-plus fa-fw">
                         <div class="icon-bg bg-pink"></div>

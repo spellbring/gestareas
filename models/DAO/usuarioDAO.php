@@ -34,6 +34,8 @@ class usuarioDAO extends Model {
                         ,fechaRegistro
                         ,tipoUsuario
                         ,EMAIL
+                        ,nombres
+                        ,apellidos
                 FROM USUARIO ";
         
         if(!empty($user)){
@@ -55,6 +57,79 @@ class usuarioDAO extends Model {
                 $userObj->setEmail(trim($usdb['EMAIL']));
                 $userObj->setFechacreacion(trim($usdb['fechaRegistro']));
                 $userObj->setPerfil_idperfil(trim($usdb['tipoUsuario']));
+                $userObj->setNombre(trim($usdb['nombres']));
+                $userObj->setApellido(trim($usdb['apellidos']));
+                
+            $usArray[] = $userObj;                
+            }
+
+            return $usArray;
+        } else {
+            return false;
+        }
+    }
+    public function getUsuarioTarea($user) {
+        
+        $sql = "SELECT b.nombres, b.apellidos, b.email FROM tarea a 
+                inner join usuario b on b.idUsuario = a.id_usuario_crea_tarea
+                where a.idTarea = ".$user."";
+                
+               
+        $datos = $this->_db->consulta($sql);
+        if ($this->_db->numRows($datos) > 0) {
+
+            $userArray = $this->_db->fetchAll($datos);
+            $usArray = array();
+
+            foreach ($userArray as $usdb) {
+                $userObj = new usuarioDTO();
+                $userObj->setEmail(trim($usdb['email']));
+                $userObj->setNombre(trim($usdb['nombres']));
+                $userObj->setApellido(trim($usdb['apellidos']));
+                
+            $usArray[] = $userObj;                
+            }
+
+            return $usArray;
+        } else {
+            return false;
+        }
+    }
+    
+     public function getUsuarioId($user) {
+        
+        $sql = "SELECT   idUsuario
+                        ,nombreUsuario
+                        ,pass
+                        ,fechaRegistro
+                        ,tipoUsuario
+                        ,EMAIL
+                        ,nombres
+                        ,apellidos
+                FROM USUARIO ";
+        
+        if(!empty($user)){
+            $sql .= "WHERE idUsuario = '" . $user . "'";
+        }
+                
+               
+        $datos = $this->_db->consulta($sql);
+        if ($this->_db->numRows($datos) > 0) {
+
+            $userArray = $this->_db->fetchAll($datos);
+            $usArray = array();
+
+            foreach ($userArray as $usdb) {
+                $userObj = new usuarioDTO();
+                $userObj->setIduser(trim($usdb['idUsuario']));
+                $userObj->setUsername(trim($usdb['nombreUsuario']));
+                $userObj->setPassword(trim($usdb['pass'])); 
+                $userObj->setEmail(trim($usdb['EMAIL']));
+                $userObj->setFechacreacion(trim($usdb['fechaRegistro']));
+                $userObj->setPerfil_idperfil(trim($usdb['tipoUsuario']));
+                $userObj->setNombre(trim($usdb['nombres']));
+                $userObj->setApellido(trim($usdb['apellidos']));
+                
             $usArray[] = $userObj;                
             }
 

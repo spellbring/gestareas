@@ -28,6 +28,8 @@ class loginController extends Controller {
                     Session::set('SESS_USER', $objUser[0]->getUsername());
                     Session::set('SESS_ID_USER', $objUser[0]->getIduser());
                     Session::set('SESS_ID_TIPO_USER', $objUser[0]->getPerfil_idperfil());
+                    Session::set('SESS_NOMBRE', $objUser[0]->getNombre().' '.$objUser[0]->getApellido());
+                    Session::set('SESS_CORREO', $objUser[0]->getEmail());
                     if (Session::get('SESS_ERRLOGIN') != null) {
                         Session::destroy('SESS_ERRLOGIN');
                     }

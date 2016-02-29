@@ -1,8 +1,8 @@
  
-<div id="footer">
+<!--<div id="footer">
     <div class="copyright">
-        <center> <a href="http://themifycloud.com">2014 © KAdmin Responsive Multi-Purpose Template</a></center></div>
- </div>
+        <center></center></div>
+ </div>-->
 </div>
 
     </div>
