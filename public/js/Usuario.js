@@ -61,8 +61,8 @@ Usuario.prototype.procesoEnviaForm = function (classFrm, url, btn, urlCarga) {
 
                 });
 
-
-                //Campos vacíos requeridos
+                if ((btn != 'btnElimina') || (btn != 'btnModifica')) {
+                    //Campos vacíos requeridos
                 //soporte inputs y listas desplegables
                 $('.' + classFrm + ' input, .' + classFrm + ' select').each(function () {
                     //var input = $(this); 
@@ -84,6 +84,10 @@ Usuario.prototype.procesoEnviaForm = function (classFrm, url, btn, urlCarga) {
 //                    }
 
                 });
+                }
+                
+                    
+                
             } else {
 
                 $("#" + btn).delay(5000).queue(function (m)

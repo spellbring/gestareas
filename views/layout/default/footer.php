@@ -1,7 +1,7 @@
- 
+</div>
 <div id="footer">
     <div class="copyright">
-        <center> <a href="http://themifycloud.com">2014 © KAdmin Responsive Multi-Purpose Template</a></center></div>
+        <center> <a href="">2016 &#169 PEG Chile | Gestor de Tareas</a></center></div>
  </div>
 </div>
 

@@ -41,7 +41,7 @@
                             ?>
                             <tbody>
                                 <tr>
-                                    <td><a onclick="Cliente.prototype.abreModal('<?php echo BASE_URL ?>cliente/detalleClientes/<?php echo $p->getIduser() ?>', 'Detalles del Cliente', '')" data-toggle="modal" href="#myModal" class="btn btn-success"><span class="fa fa-search-plus"></span></a></td>
+                                    <td><a onclick="Usuario.prototype.abreModal('<?php echo BASE_URL ?>usuario/detalleUsuario/<?php echo $p->getUsername() ?>', 'Detalles del Usuario', '')" data-toggle="modal" href="#myModal" class="btn btn-success"><span class="fa fa-search-plus"></span></a></td>
                                     <td><?php echo $p->getIduser() ?></td>
                                     <td><?php echo $p->getUsername() ?></td>
                                     <td><?php echo $p->getPassword() ?></td>
