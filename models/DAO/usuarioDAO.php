@@ -25,6 +25,29 @@ class usuarioDAO extends Model {
             return $e->getMessage();
         }
     }
+    
+    public function nuevoUsuario($nombreUsuario, $pass, $nombre, $apellido, $correo
+            , $tipoUsuario){
+        
+        
+        $sql = "insert into usuario (nombreUsuario, pass, Nombres, Apellidos
+            , fechaRegistro, tipoUsuario, email) 
+                values ('$nombreUsuario', '$pass', '$nombre', '$apellido', CURDATE(), '$tipoUsuario', '$correo')";
+        
+        try {
+
+            if ($this->_db->consulta($sql)) {
+                echo 'OK';
+            } else {
+                echo 'Hubo un error en el ingreso de datos';
+            }
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        } finally {
+            $this->_db->closeConex();
+        }
+        
+    }
 
     public function getUsuario($user) {
         
@@ -146,6 +169,59 @@ class usuarioDAO extends Model {
             return false;
         }
     }
+    
+    public function modificarUsuario($id, $usuario, $perfil, $correo) {
+        
+        $sql = "update usuario set nombreUsuario = " . "'$usuario'" . ", tipoUsuario = " . "'$perfil'" . ", email = " . "'$correo'" . " where idUsuario = " 
+                . $id;
+        
+        
+        $datos = $this->_db->consulta($sql);
+        
+        if ($datos) {
+            echo 'OK';
+        }else{
+            echo 'Hubo un error en la actualización de datos';
+        }
+    }
+    
+    public function eliminarUsuario($id){
+        
+        $sql = "delete from usuario where idUsuario = " . $id;
+        
+        echo $sql;
+        
+        $datos = $this->_db->consulta($sql);
+        
+        if ($this->_db->numRows($datos) > 0) {
+            echo 'OK';
+        }else{
+            echo 'Hubo un error en la eliminación de datos';
+        }
+        
+    }
+    
+//    public function getTiposDeUsuario(){
+//        
+//        $sql = "select u.tipoUsuario from usuario u";
+//        $datos = $this->_db->consulta($sql);
+//        
+//        if ($datos->num_rows > 0) {
+//            
+//            echo $sql;
+//
+//                $usuarioArray = $this->_db->fetchAll($datos);
+//                $uArray = array();
+//
+//                foreach ($usuarioArray as $filas) {
+//                    $usuarioDTO = new usuarioDTO();
+//                    $usuarioDTO->setId_perfil($filas['tipoUsuario']);
+//                    $uArray[] = $usuarioDTO;
+//                }
+//
+//                return $uArray;
+//            }
+//    }
     
 
 }

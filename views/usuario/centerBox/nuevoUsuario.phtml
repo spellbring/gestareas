@@ -1,11 +1,29 @@
 <div class="row">
     <form class="form" method="post">
+        <div class="col-md-6">
+            <div class="form-group">
+                <!--<div class="input-icon left">-->
+                    <!--                    <label class="control-label">Nombre de Usuario</label>-->
+                    <i class=""></i>
+                    <input name="txtNombre" type="text" class="form-control" placeholder="Nombre">
+                <!--</div>-->
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <!--<div class="input-icon left">-->
+                    <!--                    <label class="control-label">Nombre de Usuario</label>-->
+                    <i class=""></i>
+                    <input name="txtApellido" type="text" class="form-control" placeholder="Apellido">
+                <!--</div>-->
+            </div>
+        </div>
         <div class="col-md-12">
             <div class="form-group">
                 <div class="input-icon left">
                     <!--                    <label class="control-label">Nombre de Usuario</label>-->
                     <i class="fa fa-user"></i>
-                    <input name="txtNombreDeUsuario" type="text" class="form-control" placeholder="Nombre">
+                    <input name="txtNombreDeUsuario" type="text" class="form-control" placeholder="Nombre de usuario">
                 </div>
             </div>
         </div>
@@ -14,7 +32,7 @@
                 <div class="input-icon left">
                     <!--                    <label class="control-label">Contrase&ntilde;a</label>-->
                     <i class="fa fa-lock"></i>
-                    <input type="text" name="txtContrasena" class="form-control" placeholder="Contraseña">
+                    <input type="text" name="txtPass" class="form-control" placeholder="Contraseña">
                 </div>
             </div>
         </div>
@@ -30,20 +48,19 @@
         </div>
         <div class="col-md-12">
             <div class="form-group">
-                <div class="radio">
-                    
-                    <label class="radio-inline"><input id="optionsMasterCard" type="radio"
-                                                       name="optionsRadios" value="MasterCard" />&nbsp; MasterCard</label>
-                    <label class="radio-inline"><input
-                            id="optionsPayPal" type="radio" name="optionsRadios" value="PayPal" />&nbsp; PayPal
-                    </label>
-                </div>
+                <select class="form-control" name="selTipo">
+                    <option value="">Seleccione el perfil</option>
+                    <option value="0">Super Administrador</option>
+                    <option value="1">Administrador</option>
+                    <option value="3">Cliente</option>
+                    <option value="2">Cliente Interno</option>
+                </select>
 
             </div>
         </div>
         <div class="col-md-12">
             <div class="form-group text-right">
-                <button type="submit" id="btn" class="btn btn-yellow" onclick="Usuario.prototype.procesoEnviaForm('form', '<?php echo BASE_URL ?>cliente/ingresar', 'btn', '<?php echo BASE_URL ?>cliente')">Guardar</button>
+                <button type="submit" id="btn" class="btn btn-yellow" onclick="Usuario.prototype.procesoEnviaForm('form', '<?php echo BASE_URL ?>usuario/ingresar', 'btn', '<?php echo BASE_URL ?>usuario')">Guardar</button>
             </div>
         </div>
     </form>

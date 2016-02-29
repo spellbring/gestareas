@@ -67,9 +67,51 @@ class usuarioController extends Controller {
     
     function nuevo() {
         
-        $usuarios = $this->_modelo->getUsuario(null);
-        $this->_view->_usuarios = $usuarios;
         $this->_view->renderizaCenterBox('nuevoUsuario');
     
+    }
+    
+    function ingresar(){
+        
+        $usuario = $this->getTexto('txtNombreDeUsuario');
+        $pass = $this->getTexto('txtPass');
+        $nombre = $this->getTexto('txtNombre');
+        $apellido = $this->getTexto('txtApellido');
+        $correo = $this->getTexto('txtCorreo');
+        $tipo = $this->getTexto('selTipo');
+        
+
+        $usuarios = $this->_modelo->nuevoUsuario(
+                $usuario, $nombre, $pass, $apellido, $correo, $tipo);
+
+        $this->_view->_usuarios = $usuarios;
+    }
+    
+    function detalleUsuario($nombre) {
+        
+        $usuario = $this->_modelo->getUsuario($nombre);
+        $this->_view->_usuario = $usuario;
+        $this->_view->renderizaCenterBox('detalleUsuario');
+        
+    }
+    
+    function eliminar($id){
+        
+        if($this->_modelo->eliminarUsuario($id)){
+            echo 'OK';
+        }
+    }
+    
+    function modificar() {
+
+        $id = $this->getTexto("txtId");
+        $usuario = $this->getTexto("txtNombreDeUsuario");
+        $perfil = $this->getTexto("txtIdPerfil");
+        $correo = $this->getTexto("txtCorreo");
+
+        if (isset($id) && isset($usuario) && isset($correo)) {
+            $this->_modelo->modificarUsuario($id, $usuario, $perfil, $correo);
+        }
+                
     }
 }
