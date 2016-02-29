@@ -1,8 +1,16 @@
+
  
 <!--<div id="footer">
     <div class="copyright">
         <center></center></div>
  </div>-->
+
+</div>
+<div id="footer">
+    <div class="copyright">
+        <center> <a href="">2016 &#169 PEG Chile | Gestor de Tareas</a></center></div>
+ </div>
+
 </div>
 
     </div>
